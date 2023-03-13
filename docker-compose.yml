@@ -1,5 +1,7 @@
 version: "3.9"
 
+name: ${APP_NAME}
+
 volumes:
   frontend-home-data:
     name: ${FRONTEND_HOME_VOLUME_ID}
