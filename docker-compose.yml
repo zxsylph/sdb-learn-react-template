@@ -1,0 +1,29 @@
+version: "3.9"
+
+volumes:
+  frontend-home-data:
+    name: ${FRONTEND_HOME_VOLUME_ID}
+
+networks:
+  default:
+    driver: ${NETWORKS_DRIVER}
+
+services:
+  frontend:
+    hostname: ${FRONTEND_HOSTNAME}
+    container_name: ${FRONTEND_HOSTNAME}
+    image: ${FRONTEND_IMAGENAME}:latest
+    user: ${UID}:${GID}
+    command: sleep infinity
+    build:
+      context: ${FRONTEND_PATH}
+      args:
+        - UID=${UID}
+        - GID=${GID}
+    volumes:
+      - frontend-home-data:/home/node/
+      - ${HOME_PATH}/.gitconfig:/home/node/.gitconfig
+      - ${HOME_PATH}/.ssh:/home/node/.ssh
+      - ${WAKATIME_CONFIG_PATH}:/home/node/.wakatime.cfg
+      - ${TABNINE_CONFIG_PATH}:/home/node/.config/TabNine
+      - ./:/home/node/${PROJECT_DIR}

@@ -1,0 +1,13 @@
+{
+	"editor.formatOnSave": true,
+	"editor.wordWrap": "on",
+	"editor.tabSize": 2,
+	"gitlens.codeLens.enabled": false,
+	"git.autofetch": true,
+	"git.autofetchPeriod": 180,
+	"typescript.preferences.importModuleSpecifier": "non-relative",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
+}
