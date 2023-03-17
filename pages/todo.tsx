@@ -36,6 +36,9 @@ function todoPage() {
   const [show, setShow] = useState(false)
   const [items, setItems] = useState<Item[]>(allInstrument)
   const [fillItems, setFillItems] = useState<Item[]>(allInstrument)
+  const [filldata, setfilldata] = useState<Item[]>(allInstrument)
+  const [status, setStatus] = useState(false)
+
   const [deleteItem, setDeleteItem] = useState({
     itemNumber: 0,
     itemName: '',
@@ -87,9 +90,18 @@ function todoPage() {
 
 
   const loadInstrument = async (searchTerm: string = '') => {
+    setStatus(true)
+    
     const { data } = await getItem({ searchTerm, items })
+    if(searchTerm === ''){
+      setStatus(false)
 
-    setItems(data)
+    }
+    else if(searchTerm !== '')
+
+      setfilldata(data)
+
+
   }
 
 
@@ -124,7 +136,19 @@ function todoPage() {
           onSearch={handleSearch}
           onNewButtonClick={handleNewButtonClick}
         />
-    <ItemList  items={items} onDeleteItem = {onDeleteItem}/>
+    
+    { status === true  && (<ItemList  items={filldata} onDeleteItem = {onDeleteItem}/>)}
+
+    { status === false  && (<ItemList  items={items} onDeleteItem = {onDeleteItem}/>)}
+
+
+
+    {/* <ItemList  items={items} onDeleteItem = {onDeleteItem}/> */}
+    
+    
+    
+    
+
     </div>
 
     <ItemAddModal
