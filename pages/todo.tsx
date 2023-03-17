@@ -38,6 +38,7 @@ function todoPage() {
   const [fillItems, setFillItems] = useState<Item[]>(allInstrument)
   const [filldata, setfilldata] = useState<Item[]>(allInstrument)
   const [status, setStatus] = useState(false)
+  const [search,setSearch] = useState('')
 
   const [deleteItem, setDeleteItem] = useState({
     itemNumber: 0,
@@ -70,6 +71,7 @@ function todoPage() {
 
 
   const handleSearch = (searchTerm: string) => {
+     setSearch(searchTerm)
     loadInstrument(searchTerm)
   }
 
@@ -93,7 +95,7 @@ function todoPage() {
     setStatus(true)
     
     const { data } = await getItem({ searchTerm, items })
-    if(searchTerm === ''){
+    if(searchTerm === '' && searchTerm.length === 0){
       setStatus(false)
 
     }
@@ -118,6 +120,10 @@ function todoPage() {
   useEffect(() => {
     loadInstrument()
   }, [])
+
+
+  
+
 
 
   useEffect(() => {
