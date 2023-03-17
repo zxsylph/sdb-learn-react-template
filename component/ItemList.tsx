@@ -18,42 +18,46 @@ type InstrumentListProps = {
 type InstrumentListItemProps = {
   itemNumber: number
   itemName: string
-  detail: string
   preItemName: string
 }
 
 function ItemList(props: InstrumentListProps) {
   const { items, onDeleteItem } = props
   const [editShow, setEditShow] = useState(false)
+  const [Default,setDefault] = useState({
+
+    itemNumber: 0,
+    itemName: '',
+
+
+  })
 
   const [editItem, setEditItem] = useState({
     itemNumber: 0,
     itemName: '',
-    detail: '',
     preItemName: '',
   })
   const handleClose = () => setEditShow(false);
 
 
-//   const InStrumentDelete = (event: any) => {
-//     onDeleteItem({itemNumber: itemNumber, name: itemName, detail: detail })
-   
-// }
+  //   const InStrumentDelete = (event: any) => {
+  //     onDeleteItem({itemNumber: itemNumber, name: itemName, detail: detail })
+
+  // }
 
 
   const onEditItem = (newItem: InstrumentListItemProps) => {
     setEditItem({
       itemNumber: newItem.itemNumber,
       itemName: newItem.itemName,
-      detail: newItem.detail,
       preItemName: newItem.preItemName,
     })
   }
 
-  console.log('check', editItem)
-  console.log(editItem.itemNumber)
-  console.log(editItem.itemName)
-  console.log(editItem.detail)
+  // console.log('check', editItem)
+  // console.log(editItem.itemNumber)
+  // console.log(editItem.itemName)
+  // console.log(editItem.detail)
 
   return (
     <Table striped bordered hover className="mt-3" data-testid="InstrumentList">
@@ -78,43 +82,62 @@ function ItemList(props: InstrumentListProps) {
               item.name === editItem.preItemName
             ) {
               item.name = editItem.itemName
-
-
+              editItem.itemName = ''
+              console.log("name", item.name)
+              console.log("pre", editItem.preItemName)
               console.log('editcheck', editItem.itemName)
             }
 
             return (
-              
+
               <tr>
-                 <ItemEditButton itemNumber={index+1} itemName={itemData.name} show={editShow} onHide={handleClose} onEditItem={onEditItem} />
+                
                 <td>{index + 1}</td>
                 <td>{itemData.name}</td>
+                <td>
                 <Button
                   variant="info"
                   className="ms-2"
                   size="sm"
-                  onClick={() => setEditShow(true)}
+                  onClick={(e:any) => {
+                    
+                    e.preventDefault()
+                    setEditShow(true)
+                    setDefault({
+                      itemNumber: index+1,
+                      itemName: itemData.name,
+                      
+                    })
+                    
+                  
+                  
+                  }}
                 >
                   edit
                 </Button>
+                 < ItemEditButton itemNumber={Default.itemNumber} itemName={Default.itemName} show={editShow} onHide={handleClose} onEditItem={onEditItem} /> 
+                </td>
+               
                 <Button
                   variant="info"
                   className="ms-2"
                   size="sm"
-                  onClick={()=> onDeleteItem({itemNumber: index+1, name: itemData.name })}
+                  onClick={() => onDeleteItem({ itemNumber: index + 1, name: itemData.name })}
                 >
                   delete
                 </Button>
+                
+                
               </tr>
-              
+
 
             )
           })}
         </tbody>
-        
+
       )}
 
-      
+
     </Table>
   )
 }

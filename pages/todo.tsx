@@ -110,6 +110,7 @@ function todoPage() {
   const fillDelete = () => {
     const result = items.filter(check)
     setItems(result)
+    
     console.log('result', result)
   }
 
