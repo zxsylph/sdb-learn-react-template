@@ -24,6 +24,7 @@ function ItemSearchBox(props: InstrumentSearchBoxProp) {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setSearchTerm(event.target.value)
+    
   }
 
   const handleSearchButtonClick = (
