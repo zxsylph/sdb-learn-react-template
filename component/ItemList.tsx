@@ -1,6 +1,6 @@
 import { Button, Table } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
-
+import { Switch } from "antd"
 
 
 
@@ -24,7 +24,8 @@ type InstrumentListItemProps = {
 function ItemList(props: InstrumentListProps) {
   const { items, onDeleteItem } = props
   const [editShow, setEditShow] = useState(false)
-  const [Default,setDefault] = useState({
+  const [toggle, setToggle] = useState(false)
+  const [Default, setDefault] = useState({
 
     itemNumber: 0,
     itemName: '',
@@ -45,6 +46,12 @@ function ItemList(props: InstrumentListProps) {
 
   // }
 
+  const toggler = () => {
+    toggle ? setToggle(false) : setToggle(true)
+    
+  }
+
+
 
   const onEditItem = (newItem: InstrumentListItemProps) => {
     setEditItem({
@@ -54,10 +61,7 @@ function ItemList(props: InstrumentListProps) {
     })
   }
 
-  // console.log('check', editItem)
-  // console.log(editItem.itemNumber)
-  // console.log(editItem.itemName)
-  // console.log(editItem.detail)
+
 
   return (
     <Table striped bordered hover className="mt-3" data-testid="InstrumentList">
@@ -91,33 +95,33 @@ function ItemList(props: InstrumentListProps) {
             return (
 
               <tr>
-                
+
                 <td>{index + 1}</td>
                 <td>{itemData.name}</td>
                 <td>
-                <Button
-                  variant="info"
-                  className="ms-2"
-                  size="sm"
-                  onClick={(e:any) => {
-                    
-                    e.preventDefault()
-                    setEditShow(true)
-                    setDefault({
-                      itemNumber: index+1,
-                      itemName: itemData.name,
-                      
-                    })
-                    
-                  
-                  
-                  }}
-                >
-                  edit
-                </Button>
-                 < ItemEditButton itemNumber={Default.itemNumber} itemName={Default.itemName} show={editShow} onHide={handleClose} onEditItem={onEditItem} /> 
+                  <Button
+                    variant="info"
+                    className="ms-2"
+                    size="sm"
+                    onClick={(e: any) => {
+
+                      e.preventDefault()
+                      setEditShow(true)
+                      setDefault({
+                        itemNumber: index + 1,
+                        itemName: itemData.name,
+
+                      })
+
+
+
+                    }}
+                  >
+                    edit
+                  </Button>
+                  < ItemEditButton itemNumber={Default.itemNumber} itemName={Default.itemName} show={editShow} onHide={handleClose} onEditItem={onEditItem} />
                 </td>
-               
+
                 <Button
                   variant="info"
                   className="ms-2"
@@ -126,8 +130,10 @@ function ItemList(props: InstrumentListProps) {
                 >
                   delete
                 </Button>
-                
-                
+
+                <Switch  checked = {toggle}   onClick={toggler} />
+
+
               </tr>
 
 
