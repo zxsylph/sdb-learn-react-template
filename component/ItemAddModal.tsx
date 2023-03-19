@@ -25,6 +25,7 @@ function ItemAddModal(props: any) {
     event.preventDefault()
     const itemData: Item = {
       name: name,
+      status: false,
 
     }
 

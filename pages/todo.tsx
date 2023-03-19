@@ -22,14 +22,15 @@ function todoPage() {
   interface DeleteInstrument {
     itemNumber:number
     name: string
+    status: boolean
     
   }
   
 
   const allInstrument = [
-    { name: 'violin' },
-    { name: 'piano' },
-    { name: 'guitar' },
+    { name: 'violin', status : false},
+    { name: 'piano', status: false },
+    { name: 'guitar', status: false},
 
 
   ]
@@ -43,14 +44,15 @@ function todoPage() {
   const [deleteItem, setDeleteItem] = useState({
     itemNumber: 0,
     itemName: '',
+    status: false,
     
   })
 
 
 
   const onAddNewItem = (newItem: Item) => {
-    setItems([...items, { name: newItem.name}])
-    setFillItems([...fillItems, { name: newItem.name }])
+    setItems([...items, { name: newItem.name,status: newItem.status}])
+    setFillItems([...fillItems, { name: newItem.name ,status: newItem.status}])
   }
 
   const handleAddModelClose = () => {
@@ -65,6 +67,8 @@ function todoPage() {
     await setDeleteItem({
       itemNumber: Item.itemNumber,
       itemName: Item.name,
+      status: Item.status
+      
      
     })
   }
