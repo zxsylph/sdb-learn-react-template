@@ -11,7 +11,10 @@ function loginPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [defaultAlert, setDefaultAlert] = useState(false)
-  const [lapp, setlapp] = useState(false)
+  const [mail, setMail] = useState(false)
+  const [pass, setPass] = useState(false)
+  const [both, setBoth] = useState(false)
+  const [sess, setSess] = useState(false)
 
   const router = useRouter();
 
@@ -56,10 +59,35 @@ function loginPage() {
     const check3 = username.indexOf("@")
 
 
-   if((check3 > -1 && (check1 > -1 || check2 > -1)))
+    if ((check3 > -1 && (check1 > -1 || check2 > -1)) && password.length > 0) {
+      setSess(true)
       router.push("/todo");
+      
+    }
+    if ((!(check3 > -1 && (check1 > -1 || check2 > -1))) && password.length > 0) {
+      setMail(true)
+    }
+    else {
+      setMail(false)
+    }
+    if ((check3 > -1 && (check1 > -1 || check2 > -1)) && password.length === 0) {
+      setPass(true)
+    }
+    else {
+      setPass(false)
+    }
+    if ((!(check3 > -1 && (check1 > -1 || check2 > -1))) && password.length === 0) {
+      setBoth(true)
+    }
+    else {
+      setBoth(false)
+    }
+
+
 
   }
+
+
 
 
 
@@ -86,9 +114,19 @@ function loginPage() {
 
 
             <button className="btn btn-success">ส่ง</button>
-            <Alert color="primary" isOpen={lapp}>
-              <strong>! </strong> Your email should have the following format such as test.3@.com/test.3@.ac.th
+            <Alert color="warning" isOpen={mail}>
+              <strong>! </strong> Your email is invalid.
             </Alert>
+            <Alert color="warning" isOpen={pass}>
+              <strong>! </strong> Your pass is Null.
+            </Alert>
+            <Alert color="warning" isOpen={both}>
+              <strong>! </strong> Your email is invalid  and your pass is Null.
+            </Alert>
+            <Alert color="success" isOpen={sess} >
+              <strong>Success!</strong> welcome to To do
+            </Alert>
+
           </form>
         </div>
       </div>

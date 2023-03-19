@@ -15,7 +15,7 @@ type InstrumentListProps = {
   onDeleteItem: any
 }
 
-type InstrumentListItemProps = {
+type ItemListItemProps = {
   itemNumber: number
   itemName: string
   preItemName: string
@@ -51,10 +51,7 @@ function ItemList(props: InstrumentListProps) {
   const handleClose = () => setEditShow(false);
 
 
-  //   const InStrumentDelete = (event: any) => {
-  //     onDeleteItem({itemNumber: itemNumber, name: itemName, detail: detail })
-
-  // }
+  
 
 
   const saveStatus = (e: save) => {
@@ -68,14 +65,7 @@ function ItemList(props: InstrumentListProps) {
 
 
 
-  const toggler = () => {
-    toggle ? setToggle(false) : setToggle(true)
-
-  }
-
-
-
-  const onEditItem = (newItem: InstrumentListItemProps) => {
+  const onEditItem = (newItem: ItemListItemProps) => {
     setEditItem({
       itemNumber: newItem.itemNumber,
       itemName: newItem.itemName,
@@ -112,9 +102,7 @@ function ItemList(props: InstrumentListProps) {
               item.name = editItem.itemName
 
               editItem.itemName = ''
-              console.log("name", item.name)
-              console.log("pre", editItem.preItemName)
-              console.log('editcheck', editItem.itemName)
+            
             }
 
 

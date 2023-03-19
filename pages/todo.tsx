@@ -1,5 +1,5 @@
-import React, { useEffect,useState } from "react";
-import InstrumentAddButton from "component/navbar";
+import React, { useEffect, useState } from "react";
+import NavBarItem from "component/navbar";
 
 
 import ItemSearchBox from "component/ItemSearchBox";
@@ -12,25 +12,22 @@ import getItem from "component/getItem";
 
 function todoPage() {
 
+
   
-  // interface Item  {
-  //   name: string
-    
-  // }
 
 
   interface DeleteInstrument {
-    itemNumber:number
+    itemNumber: number
     name: string
     status: boolean
-    
+
   }
-  
+
 
   const allInstrument = [
-    { name: 'violin', status : false},
+    { name: 'violin', status: false },
     { name: 'piano', status: false },
-    { name: 'guitar', status: false},
+    { name: 'guitar', status: false },
 
 
   ]
@@ -39,20 +36,20 @@ function todoPage() {
   const [fillItems, setFillItems] = useState<Item[]>(allInstrument)
   const [filldata, setfilldata] = useState<Item[]>(allInstrument)
   const [status, setStatus] = useState(false)
-  const [search,setSearch] = useState('')
+  const [search, setSearch] = useState('')
 
   const [deleteItem, setDeleteItem] = useState({
     itemNumber: 0,
     itemName: '',
     status: false,
-    
+
   })
 
 
 
   const onAddNewItem = (newItem: Item) => {
-    setItems([...items, { name: newItem.name,status: newItem.status}])
-    setFillItems([...fillItems, { name: newItem.name ,status: newItem.status}])
+    setItems([...items, { name: newItem.name, status: newItem.status }])
+    setFillItems([...fillItems, { name: newItem.name, status: newItem.status }])
   }
 
   const handleAddModelClose = () => {
@@ -68,14 +65,14 @@ function todoPage() {
       itemNumber: Item.itemNumber,
       itemName: Item.name,
       status: Item.status
-      
-     
+
+
     })
   }
 
 
   const handleSearch = (searchTerm: string) => {
-     setSearch(searchTerm)
+    setSearch(searchTerm)
     loadInstrument(searchTerm)
   }
 
@@ -86,8 +83,8 @@ function todoPage() {
 
   const check = (items: any) => {
     if (
-      items.name !== deleteItem.itemName 
-      
+      items.name !== deleteItem.itemName
+
     ) {
       return items
     }
@@ -97,13 +94,13 @@ function todoPage() {
 
   const loadInstrument = async (searchTerm: string = '') => {
     setStatus(true)
-    
+
     const { data } = await getItem({ searchTerm, items })
-    if(searchTerm === '' && searchTerm.length === 0){
+    if (searchTerm === '' && searchTerm.length === 0) {
       setStatus(false)
 
     }
-    else if(searchTerm !== '')
+    else if (searchTerm !== '')
 
       setfilldata(data)
 
@@ -117,7 +114,7 @@ function todoPage() {
     const result = items.filter(check)
     setItems(result)
     setfilldata(result)
-    
+
     console.log('result', result)
   }
 
@@ -126,7 +123,7 @@ function todoPage() {
   }, [])
 
 
-  
+
 
 
 
@@ -139,37 +136,37 @@ function todoPage() {
   return (
 
     <>
-    
-    <InstrumentAddButton />
-    <div className="px-4 py-2 d-flex flex-column">
-    <Title title="Todo List" appendClassName="mb-2"></Title>
-    <ItemSearchBox
+
+      <NavBarItem />
+      <div className="px-4 py-2 d-flex flex-column">
+        <Title title="Todo List" appendClassName="mb-2"></Title>
+        <ItemSearchBox
           onClick={setShow}
           onSearch={handleSearch}
           onNewButtonClick={handleNewButtonClick}
         />
-    
-    { status === true  && (<ItemList  items={filldata} onDeleteItem = {onDeleteItem}/>)}
 
-    { status === false  && (<ItemList  items={items} onDeleteItem = {onDeleteItem}/>)}
+        {status === true && (<ItemList items={filldata} onDeleteItem={onDeleteItem} />)}
+
+        {status === false && (<ItemList items={items} onDeleteItem={onDeleteItem} />)}
 
 
 
-    {/* <ItemList  items={items} onDeleteItem = {onDeleteItem}/> */}
-    
-    
-    
-    
+       
 
-    </div>
 
-    <ItemAddModal
+
+
+
+      </div>
+
+      <ItemAddModal
         show={show}
         onHide={handleAddModelClose}
         onAddItem={onAddNewItem}
       />
 
-   </>
+    </>
   )
 
 
