@@ -8,6 +8,7 @@ import ItemEditButton from 'component/ItemEditButton'
 
 
 import Item from 'pages/type/item'
+import Item from 'antd/es/list/Item'
 // Instrument is Declare global types.
 
 type InstrumentListProps = {
@@ -20,11 +21,13 @@ type ItemListItemProps = {
   itemName: string
   preItemName: string
   status: boolean
+  tagInput: boolean
 }
 
 type save = {
-  name:string
-  status:boolean
+  name: string
+  status: boolean
+  tagInput: boolean
 }
 
 function ItemList(props: InstrumentListProps) {
@@ -33,14 +36,26 @@ function ItemList(props: InstrumentListProps) {
   const [toggle, setToggle] = useState(false)
   const [namestatus, setNameStatus] = useState('')
   const [numstatus, setNumStatus] = useState(false)
+  const [taginput, setTagInput] = useState(false)
+  const [tagItem, setTagItem] = useState('')
   const [Default, setDefault] = useState({
 
     itemNumber: 0,
     itemName: '',
     status: false,
+    tagInput: false,
 
 
   })
+
+  const [cancelTag, setCancelTag] = useState({
+    itemNumber: 0,
+    itemName: '',
+    status: false,
+    tagInput: false,
+  })
+
+
 
   const [editItem, setEditItem] = useState({
     itemNumber: 0,
@@ -51,15 +66,22 @@ function ItemList(props: InstrumentListProps) {
   const handleClose = () => setEditShow(false);
 
 
-  
+
 
 
   const saveStatus = (e: save) => {
-   
+
     setNameStatus(e.name)
     setNumStatus(e.status)
-    console.log("setNameStatus",e.name )
+    console.log("setNameStatus", e.name)
 
+
+  }
+
+  const changeEdit = (e:any) => {
+
+    console.log(e.target.value)
+    setTagItem(e.target.value)
 
   }
 
@@ -92,6 +114,7 @@ function ItemList(props: InstrumentListProps) {
             const itemData: Item = {
               name: item.name,
               status: item.status,
+              tagInput: item.tagInput,
 
             }
 
@@ -102,7 +125,7 @@ function ItemList(props: InstrumentListProps) {
               item.name = editItem.itemName
 
               editItem.itemName = ''
-            
+
             }
 
 
@@ -111,11 +134,25 @@ function ItemList(props: InstrumentListProps) {
               item.status = numstatus ? false : true
             }
 
+            if (item.name === cancelTag.itemName) {
+              console.log("cancel",cancelTag.itemName)
+              item.tagInput = false
+            }
+
+
+            if (item.name === Default.itemName) {
+              console.log("edit ok",Default.itemName)
+              item.tagInput = true
+            }
+
+           
+
+
 
             return (
 
               <tr>
-
+                {(!item.tagInput) && (<>
                 <td>{index + 1}</td>
                 <td>{itemData.name}</td>
                 <td>
@@ -126,13 +163,16 @@ function ItemList(props: InstrumentListProps) {
                     onClick={(e: any) => {
 
                       e.preventDefault()
-                      setEditShow(true)
+                      // setEditShow(true)
                       setDefault({
                         itemNumber: index + 1,
                         itemName: itemData.name,
                         status: itemData.status,
+                        tagInput: itemData.tagInput,
 
                       })
+
+
 
 
 
@@ -140,7 +180,8 @@ function ItemList(props: InstrumentListProps) {
                   >
                     edit
                   </Button>
-                  < ItemEditButton itemNumber={Default.itemNumber} itemName={Default.itemName} show={editShow} onHide={handleClose} onEditItem={onEditItem} />
+                  {/* < ItemEditButton itemNumber={Default.itemNumber} itemName={Default.itemName} show={editShow} onHide={handleClose} onEditItem={onEditItem} /> */}
+
                 </td>
 
                 <Button
@@ -152,10 +193,71 @@ function ItemList(props: InstrumentListProps) {
                   delete
                 </Button>
 
-                <Switch checked={item.status} onClick={() => { saveStatus({name: item.name,status:item.status}) }} />
+                <Switch checked={item.status} onClick={() => { saveStatus({ name: item.name, status: item.status, tagInput: item.tagInput }) }} />
+
+                </>)}
+
+
+                {item.tagInput && (<>
+                 
+                  <input  defaultValue={item.name}   onChange={changeEdit}/>
+                  <Button 
+                  onClick={()=>{
+
+                        setEditItem({
+
+                          itemNumber: index+1,
+                          itemName: tagItem,
+                          preItemName: item.name,
+                          status: item.status,
+
+
+                        })
+
+                       item.tagInput = false
+
+
+
+                  }}  
+                  
+                  
+                  >
+                    ok
+                  </Button>
+                  <Button
+                    onClick={(e: any) => {
+
+                      setCancelTag({
+                        itemNumber: index + 1,
+                        itemName: itemData.name,
+                        status: itemData.status,
+                        tagInput: itemData.tagInput,
+
+                      })
+
+                      setDefault({
+                        itemNumber: 0,
+                        itemName: '',
+                        status: false,
+                        tagInput: false,
+
+
+                      })
+
+
+                    }
+                    }
+                  >
+                    cancel
+                  </Button>
+                </>)}
 
 
               </tr>
+
+
+
+
 
 
             )

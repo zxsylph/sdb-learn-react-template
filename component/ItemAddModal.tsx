@@ -26,6 +26,7 @@ function ItemAddModal(props: any) {
     const itemData: Item = {
       name: name,
       status: false,
+      tagInput: false,
 
     }
 
