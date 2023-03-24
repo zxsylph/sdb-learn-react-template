@@ -17,7 +17,7 @@ function todoPage() {
 	}
 
 	const allInstrument = [
-		{ name: 'violin', status: false, tagInput: true },
+		{ name: 'violin', status: false, tagInput: false },
 		{ name: 'piano', status: false, tagInput: false },
 		{ name: 'guitar', status: false, tagInput: false },
 	]
