@@ -202,6 +202,9 @@ function ItemList(props: InstrumentListProps) {
                  
                   <input  defaultValue={item.name}   onChange={changeEdit}/>
                   <Button 
+                  variant="info"
+                  className="ms-2"
+                  size="sm"
                   onClick={()=>{
 
                         setEditItem({
@@ -225,6 +228,9 @@ function ItemList(props: InstrumentListProps) {
                     ok
                   </Button>
                   <Button
+                  variant="info"
+                  className="ms-2"
+                  size="sm"
                     onClick={(e: any) => {
 
                       setCancelTag({
