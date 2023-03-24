@@ -8,7 +8,7 @@ import ItemEditButton from 'component/ItemEditButton'
 
 
 import Item from 'pages/type/item'
-import Item from 'antd/es/list/Item'
+// import Item from 'antd/es/list/Item'
 // Instrument is Declare global types.
 
 type InstrumentListProps = {
